@@ -20,11 +20,11 @@ while True:
 
     delta_frame=cv2.absdiff(first_frame,gray)
     thresh_frame=cv2.threshold(delta_frame, 30, 255, cv2.THRESH_BINARY)[1]
-    thresh_frame=cv2.dilate(thresh_frame, None, iterations=2)
+    #thresh_frame=cv2.dilate(thresh_frame, None, iterations=2)
     (cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
     for contour in cnts:
-        if cv2.contourArea(contour) < 1000000:
+        if cv2.contourArea(contour) < 100000:
             continue
         status=1
 
@@ -63,46 +63,3 @@ df.to_csv("Times.csv")
 
 video.release()
 cv2.destroyAllWindows
-"""
-import cv2
-import numpy as np
-
-
-boundaries = [
-	([110, 50, 50], [130, 255, 255]),#red
-	([201, 18, 18], [235, 96, 96]),#blue
-	([22,60,200], [62, 174, 250]),#yellow
-	([103, 86, 65], [145, 133, 128])#gray
-     ]
-
-def colour(hsv, lower, upper,color):
-    mask = cv2.inRange(hsv, lower, upper)
-
-    res = cv2.bitwise_and(frame, frame, mask=mask)
-    #cv2.imshow('frame', frame)
-    #cv2.imshow('mask', mask)
-    cv2.imshow(color, res)
-
-#cap = cv2.VideoCapture(0)
-
-frame = cv2.imread("/Users/ahad/PycharmProjects/python_project/venv/src/pokemon.jpg")
-
-hsv = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
-while True:
-    #blue
-    colour(hsv, np.array(boundaries[0][0]), np.array(boundaries[0][1]), 'red')
-    #red
-    colour(hsv, np.array(boundaries[1][0]), np.array(boundaries[1][1]), 'blue')
-    # yellow
-    colour(hsv, np.array(boundaries[2][0]), np.array(boundaries[2][1]), 'yellow')
-    #grey
-    colour(hsv, np.array(boundaries[3][0]), np.array(boundaries[3][1]), 'grey')
-
-    key = cv2.waitKey(1)
-
-    if key == ord('q'):
-        break
-
-cv2.destroyAllWindows()
-cap.release()
-"""

@@ -12,13 +12,14 @@ def colour(hsv, lower, upper,color):
     #cv2.imshow('frame', frame)
     #cv2.imshow('mask', mask)
     cv2.imshow(color, res)
-
-#cap = cv2.VideoCapture(0)
-
-frame = cv2.imread("/Users/ahad/PycharmProjects/python_project/venv/src/pokemon.jpg")
-
-hsv = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+    cap = cv2.VideoCapture(0)
 while True:
+    cap = cv2.VideoCapture(0)
+
+    _, frame = cap.read()
+
+    hsv = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+
     #red
     colour(hsv, np.array(boundaries[0]), np.array(boundaries[1]), 'red')
 
